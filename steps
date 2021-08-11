@@ -1,0 +1,47 @@
+Below the project steps:
+
+#### create a model API
+
+* one models is implemented
+* model is saved as a local file using pickle
+* saved structure is as follow:
+
+toSave = {
+   "X_test": X_test_cv,
+   "y_test": y_test,
+   "model": allBranchesModel,
+   "vectorizer": allBranchesVectorizer
+}
+
+#### API as a docker container
+
+* docker image build . -t api_reviews:latest -f apiDockerFile
+* docker container run api_reviews
+
+#### write a test script
+
+* it checks that the score is above a minimum
+* it accepts a parameter to specify address outside of a docker compose context
+* it produces a csv file
+
+#### test script as a docker container
+
+* docker image build . -t api_reviews_score_test:latest -f scoreDockerFile
+
+#### docker-compose tests
+
+* docker-compose up
+
+#### K8S
+
+* push API on dockerHub 
+* create deployment, service and ingress
+
+kubectl create -f project2_model_api_service.yml
+kubectl create -f project2_model_api_ingress.yml
+kubectl create -f project2_model_api_deployment.yml
+
+* final test
+* to retrieve exposed ip address: kubectl get ingress
+* test: curl -X GET -i http://192.168.49.2/all_branches/score
+

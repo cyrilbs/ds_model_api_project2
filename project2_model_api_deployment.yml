@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project2-model-api-deployment 
+  labels:
+    app: project2-model-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: project2-model-api
+  template:
+    metadata:
+      labels:
+        app: project2-model-api
+    spec:
+      containers:
+      - name: model-api
+        image: cyrilbs/api_reviews:latest
+        ports:
+        - containerPort: 5000
+
+

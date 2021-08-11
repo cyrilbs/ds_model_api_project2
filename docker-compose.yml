@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  api:
+    image: api_reviews:latest
+    container_name: api_reviews
+    networks: 
+      - my_network_from_compose
+    ports: 
+      - target: 5000
+        published: 5000
+        protocol: tcp
+        mode: host
+
+  score:
+    image: api_reviews_score_test:latest
+    container_name: score_test
+    depends_on:
+      - "api"
+    networks: 
+      - my_network_from_compose
+    volumes:
+      - ./:/app
+
+networks:
+  my_network_from_compose:

@@ -1,0 +1,21 @@
+### start K8S on virtual machine
+
+minikube start --addons ingress
+kubectl proxy --address='0.0.0.0' --disable-filter=true
+minikube dashboard --url=true
+
+in url replace ip by public one and port by 8001
+
+### push API on dockerHub to be used with K8S
+
+docker tag api_reviews:latest cyrilbs/api_reviews:latest
+docker login 
+docker push cyrilbs/api_reviews:latest
+
+#### create git repo
+
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/cyrilbs/ds_model_api_project2.git
+git push --set-upstream origin master
